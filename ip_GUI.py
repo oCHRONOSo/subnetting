@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, font
+
 
 def valid_ip(ip_str):
     ip_components = ip_str.split(".")
@@ -161,49 +162,60 @@ def calculate_subnets():
         
         c += int(net_bin[mask:], 2) + subnet_size
 
+
+bg_color = "#a8dadc"
+bg_label = "#a8dadc"
+fg_label = "#1d3557"
+bg_entry = "#f1faee"
+fg_entry = "#1d3557"
+
 app = tk.Tk()
+app.option_add("*Font", "Helvetica 11")
+app.configure(bg=bg_color)
+app.resizable(False, False)
+
 app.title("Subnet Calculator")
 
 # IP Address Entry
-ip_label = tk.Label(app, text="Enter IP Address:")
+ip_label = tk.Label(app, text="Enter IP Address:", bg=bg_label, fg=fg_label)
 ip_label.pack()
-ip_entry = tk.Entry(app)
+ip_entry = tk.Entry(app,bg=bg_entry,fg=fg_entry)
 ip_entry.pack()
 
 # Subnet Mask Entry
-mask_label = tk.Label(app, text="Enter Subnet Mask:")
+mask_label = tk.Label(app, text="Enter Subnet Mask:", bg=bg_label, fg=fg_label)
 mask_label.pack()
-mask_entry = tk.Entry(app)
+mask_entry = tk.Entry(app,bg=bg_entry,fg=fg_entry)
 mask_entry.pack()
 
 # Radio Buttons for Calculation Method
 calculation_method_var = tk.StringVar()
 calculation_method_var.set("subnets")  # Default to subnets
 
-subnet_radio = tk.Radiobutton(app, text="Number of Subnets", variable=calculation_method_var, value="subnets")
+subnet_radio = tk.Radiobutton(app, text="Subnets", variable=calculation_method_var, value="subnets", bg=bg_label, fg=fg_label)
 subnet_radio.pack()
 
-host_radio = tk.Radiobutton(app, text="Number of Hosts per Subnet", variable=calculation_method_var, value="hosts")
+host_radio = tk.Radiobutton(app, text="Hosts", variable=calculation_method_var, value="hosts", bg=bg_label, fg=fg_label)
 host_radio.pack()
 
 # Number of Subnets or Hosts Entry
-subnet_host_label = tk.Label(app, text="Number of Subnets/Hosts:")
+subnet_host_label = tk.Label(app, text="Number of Subnets:", bg=bg_label, fg=fg_label)
 subnet_host_label.pack()
-subnet_entry = tk.Entry(app)
+subnet_entry = tk.Entry(app,bg=bg_entry,fg=fg_entry)
 subnet_entry.pack()
 
 # Number of Hosts per Subnet Entry
-host_label = tk.Label(app, text="Number of Hosts per Subnet:")
+host_label = tk.Label(app, text="Number of Hosts per Subnet:", bg=bg_label, fg=fg_label)
 host_label.pack()
-host_entry = tk.Entry(app)
+host_entry = tk.Entry(app,bg=bg_entry,fg=fg_entry)
 host_entry.pack()
 
 # Calculate Button
-calculate_button = tk.Button(app, text="Calculate Subnets", command=calculate_subnets)
-calculate_button.pack()
+calculate_button = tk.Button(app, text="Calculate", command=calculate_subnets,bg="#e63946")
+calculate_button.pack(pady=5)
 
 # Result Display
-result_text = tk.Text(app, height=10, width=40)
+result_text = tk.Text(app, height=20, width=40,bg=bg_entry,fg=fg_entry)
 result_text.pack()
 
 app.mainloop()

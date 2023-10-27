@@ -91,7 +91,7 @@ def subnet_range(subnet_ip, newmask):
 #try:
 # getting the input
 while True :
-    ip = input("IP (ej:192.168.1.0) : ")
+    ip = input("IP (ej:192.168.1.0): ")
     if valid_ip(ip) == False :
         print("verifica tu ip")
         #exit()
@@ -121,7 +121,7 @@ while True :
     if sh == "s":
 
         while True :
-            subnet_num = int(input("numero de subredes :"))
+            subnet_num = int(input("numero de subredes: "))
             rango = subnet_num
             
             if subnet_num > max_subnet :
@@ -139,7 +139,7 @@ while True :
     elif sh == "h":
         while True :
             max_host = 2**(32 - mask - 1)
-            host = int(input("numero de hosts/subred : "))
+            host = int(input("numero de hosts/subred: "))
             
             if host > max_host :
                 print(f"numero maximo de host es {max_host}")
@@ -171,7 +171,7 @@ subnet_size = 2**(32-newmask)
 host_num = subnet_size - 2
 print("numero maximo de hosts en cada subnet: " + str(host_num))
 print(f"la red inicial de la ip {net}")
-print(f"la mascara de la red inicial {masktoaddress(mask)} ({mask})")
+#print(f"la mascara de la red inicial {masktoaddress(mask)} ({mask})")
 # convert to binary : print(bin(6)[2:].zfill(8))
 
 c = int(net_bin[mask:], 2)
