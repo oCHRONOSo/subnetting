@@ -1,24 +1,58 @@
-## Proyecto de Cálculo de Subredes
+# Subnetting Calculator
 
-Este proyecto es un programa en Python que permite calcular y listar las subredes de una dirección IP dada, junto con sus máscaras de subred correspondientes. A continuación, se describen las principales funciones y características del programa:
+Subnetting Calculator is a Python application that helps you calculate subnets for a given IP address and subnet mask. It provides both a graphical user interface (GUI) and a command-line interface (CLI) for your convenience.
 
-- Define funciones para validar direcciones IP y máscaras de subred.
-- Proporciona funciones para convertir direcciones IP en formato binario y realizar cálculos relacionados con subredes.
-- Solicita al usuario que ingrese una dirección IP y una máscara de subred válidas.
-- Permite al usuario especificar si desea calcular subredes en función del número de hosts o del número de subredes.
-- Calcula y muestra las subredes resultantes junto con sus máscaras de subred correspondientes.
-- Utiliza operaciones binarias para realizar los cálculos necesarios y garantiza que las subredes sean válidas y se ajusten a la dirección IP y la máscara de subred proporcionadas.
+## Table of Contents
+- [Subnetting Calculator](#subnetting-calculator)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - [Windows](#windows)
+  - [Linux](#linux)
+- [Usage](#usage)
+  - [GUI Usage](#gui-usage)
+  - [CLI Usage](#cli-usage)
+  - [Features](#features)
 
-Nota: Algunas partes del código están comentadas, y se mencionan líneas de código que están comentadas, por lo que es posible que debas descomentarlas si son necesarias para tu caso de uso específico.
+## Prerequisites
 
-### Ejemplo de Uso:
+Before using Subnetting Calculator, make sure you have Python installed. You can check if Python is installed by running the following command:
 
+```shell
+python --version
 ```
-IP (ej:192.168.1.0) : 192.168.1.0
-mascara (ej:24 o 255.255.255.0): 255.255.255.0
-calcular las subredes usando numero de host por subred (h) o numero de subredes (s): s
-numero de subredes : 4
-192.168.1.0/26
-192.168.1.64/26
-192.168.1.128/26
-192.168.1.192/26
+If Python is not installed, follow the installation instructions below for your specific operating system.
+
+# Installation
+## Windows
+Download the latest Python installer for Windows from the official Python website.
+Run the installer and follow the on-screen instructions to install Python.
+## Linux
+You can install Python on most Linux distributions using the package manager. For example, on Debian/Ubuntu-based systems, you can use:
+
+```shell
+sudo apt-get install python
+```
+On Red Hat/Fedora-based systems, you can use:
+```shell
+sudo dnf install python
+```
+# Usage
+Subnetting Calculator can be used either through the GUI or the CLI. The application takes an IP address, subnet mask, and allows you to calculate subnets based on the number of subnets or the number of hosts.
+
+## GUI Usage
+To run the GUI, execute the following command:
+
+```shell
+python ip_GUI.py
+```
+## CLI Usage
+To run the CLI, execute the following command:
+
+```shell
+python ip.py
+```
+## Features
+- Calculate subnets based on the number of subnets or the number of hosts.
+- Validate input data, including IP addresses and subnet masks.
+- Display subnet network IP, first/last host IP, and broadcast IP for each subnet.
