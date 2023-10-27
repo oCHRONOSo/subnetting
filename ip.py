@@ -72,25 +72,40 @@ def masktoaddress(mask, inumbers=True):
     else:
         return maskaddr
 
+def subnet_range(subnet_ip, newmask):
+    subnet_size = 2 ** (32 - newmask)
+    # Calculate the first host
+    first_host = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + 1)[2:].zfill(32 - newmask)
+    first_host_ip = [int(part, 2) for part in addchar(first_host).split(".")]
+    
+    # Calculate the last host
+    last_host = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + subnet_size - 2)[2:].zfill(32 - newmask)
+    last_host_ip = [int(part, 2) for part in addchar(last_host).split(".")]
+    
+    # Calculate the broadcast IP
+    broadcast_ip = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + subnet_size - 1)[2:].zfill(32 - newmask)
+    broadcast_ip = [int(part, 2) for part in addchar(broadcast_ip).split(".")]
+    
+    return first_host_ip, last_host_ip, broadcast_ip
+
 #try:
 # getting the input
-switch = True
-while switch :
+while True :
     ip = input("IP (ej:192.168.1.0) : ")
     if valid_ip(ip) == False :
         print("verifica tu ip")
         #exit()
     else:
-        switch = False
+        break
 
-switch = True
-while switch :
+
+while True :
     mask = input("mascara (ej:24 o 255.255.255.0): ")
     if valid_mask(mask) == False:
         print("verifica tu mascara")
         #exit()
     else:
-        switch = False
+        break
 
 if mask.find(".") != -1 :
     mask = int(iptobin(mask).count("1"))
@@ -99,29 +114,30 @@ else:
 
 max_subnet = 2**(32 - mask - 2)
 
-switch = True
-while switch :
+
+while True :
     sh = input("calcular las subredes usando numero de host por subred (h) o numero de subredes (s): ")
     
     if sh == "s":
 
-        while switch :
+        while True :
             subnet_num = int(input("numero de subredes :"))
             rango = subnet_num
+            
             if subnet_num > max_subnet :
                 print(f"el numero maximo de subredes es {max_subnet}")
                 #exit()
             else:
-                switch = False
+                break
 
         n = 0
         while subnet_num > 2**n:
             n = n + 1
 
         print(f"maximo numero de subredes: {2**n}")
-    
+        break
     elif sh == "h":
-        while switch :
+        while True :
             max_host = 2**(32 - mask - 1)
             host = int(input("numero de hosts/subred : "))
             
@@ -129,17 +145,17 @@ while switch :
                 print(f"numero maximo de host es {max_host}")
                 #exit()
             else:
-                switch = False
-
+                break
         n_host = 0
         while 2**n_host < host + 2:
             n_host += 1
 
         n = 32 - mask - n_host
         rango = 2**n
+        break
     else:
         print("tiene que ser (s) o (h)")
-        #exit()
+        #exit()1
    
 # get the network IP
 # net_bin = bin(int(iptobin(ip), 2) & int(masktoaddress(mask, False), 2))[2:]
@@ -172,8 +188,13 @@ for k in range(rango):
             k += 1
         else:
             subnet_ip += str(i)
+            
+    first_host_ip, last_host_ip, broadcast_ip = subnet_range(subnet_bin, newmask) 
        
-    print(f"{subnet_ip}/{newmask}")
+    print(f"IP subred: {subnet_ip}/{newmask}")
+    print(f"Primer Host: {'.'.join(map(str, first_host_ip))}")
+    print(f"Ultimo Host: {'.'.join(map(str, last_host_ip))}")
+    print(f"IP broadcast: {'.'.join(map(str, broadcast_ip))}\n")
     c += int(net_bin[mask:], 2) + subnet_size
 
 #except:

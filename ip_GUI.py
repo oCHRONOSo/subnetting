@@ -69,6 +69,22 @@ def masktoaddress(mask, inumbers=True):
     else:
         return maskaddr
 
+def subnet_range(subnet_ip, newmask):
+    subnet_size = 2 ** (32 - newmask)
+    # Calculate the first host
+    first_host = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + 1)[2:].zfill(32 - newmask)
+    first_host_ip = [int(part, 2) for part in addchar(first_host).split(".")]
+    
+    # Calculate the last host
+    last_host = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + subnet_size - 2)[2:].zfill(32 - newmask)
+    last_host_ip = [int(part, 2) for part in addchar(last_host).split(".")]
+    
+    # Calculate the broadcast IP
+    broadcast_ip = subnet_ip[:newmask] + bin(int(subnet_ip[newmask:], 2) + subnet_size - 1)[2:].zfill(32 - newmask)
+    broadcast_ip = [int(part, 2) for part in addchar(broadcast_ip).split(".")]
+    
+    return first_host_ip, last_host_ip, broadcast_ip
+
 def calculate_subnets():
     ip = ip_entry.get()
     mask = mask_entry.get()
@@ -135,7 +151,14 @@ def calculate_subnets():
                 k += 1
             else:
                 subnet_ip += str(i)
-        result_text.insert(tk.END, f"{subnet_ip}/{newmask}\n")
+        
+        first_host_ip, last_host_ip, broadcast_ip = subnet_range(subnet_bin, newmask) 
+       
+        result_text.insert(tk.END,f"IP subred: {subnet_ip}/{newmask}\n")
+        result_text.insert(tk.END,f"Primer Host: {'.'.join(map(str, first_host_ip))}\n")
+        result_text.insert(tk.END,f"Ultimo Host: {'.'.join(map(str, last_host_ip))}\n")
+        result_text.insert(tk.END,f"IP broadcast: {'.'.join(map(str, broadcast_ip))}\n\n")
+        
         c += int(net_bin[mask:], 2) + subnet_size
 
 app = tk.Tk()
